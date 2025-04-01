@@ -10,7 +10,6 @@ async function getPassword(){
     try {
         const configData = fs.readFileSync('./public/config.json', 'utf-8');
         const config = JSON.parse(configData);
-        console.log(config);
         password = config.password;
         console.log("PASSWORD RETRIEVED");
     } catch (error) {
@@ -61,6 +60,22 @@ async function initializeDatabase(){
                 console.log(error);
                 response.status(500).send("Error fetching data from database.");
             }
+        });
+
+
+        application.get("/start", async (request, response) => {
+
+            try{
+                const[results, fields] = await connection.query(
+                    'SELECT DISTINCT `Departure station` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france`'
+                );
+                console.log(results);
+                response.send(results);
+            }catch(error){
+                console.log(error);
+                response.status(500).send("Error fetching data from database.");
+            }
+
         });
 
 

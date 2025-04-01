@@ -7,11 +7,18 @@
         <h1>
             Hello! Welcome to SQLTrain!
         </h1>
-        <input type="button" value = "Start" onclick= "testCall()" ></input>
+        <input type="button" value = "Test" onclick= "testCall()" ></input>
+        <input type="button" value = "Starting locs" onclick= "getStartLocs()" ></input>
         <p id="response"></p>
         <script>
             async function testCall(){
                 const response = await fetch('/test');
+                document.getElementById("response").textContent = await response.text();
+                console.log(response);
+            }
+
+            async function getStartLocs(){
+                const response = await fetch('/start');
                 document.getElementById("response").textContent = await response.text();
                 console.log(response);
             }
