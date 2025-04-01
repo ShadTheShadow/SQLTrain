@@ -5,15 +5,24 @@ const mysql = require('mysql2/promise');
 
 var password;
 
-
+async function getPassword(){
+    const fs = require('fs');
+    try {
+        const configData = fs.readFileSync('./public/config.json', 'utf-8');
+        const config = JSON.parse(configData);
+        console.log(config);
+        password = config.password;
+        console.log("PASSWORD RETRIEVED");
+    } catch (error) {
+        console.error("Error reading or parsing config file:", error);
+    }
+}
 
 async function initializeDatabase(){
 
     try {
 
-        password = "EXAMPLE"; // Replace this with your actual password or method to fetch it securely
-
-        console.log("Password: " + password);   
+        await getPassword();  
 
         const connection = await mysql.createConnection({
             host: 'localhost',
@@ -28,7 +37,7 @@ async function initializeDatabase(){
 
         console.log("success");
 
-        //Puts index.html in a public folder
+        //Ensures index.html is in the public directory
         const path = require('path');
         application.use(express.static(path.join(__dirname, 'public')));
 
