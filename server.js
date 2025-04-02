@@ -71,6 +71,7 @@ async function initializeDatabase(){
                 );
                 console.log(results);
                 response.send(results);
+
             }catch(error){
                 console.log(error);
                 response.status(500).send("Error fetching data from database.");

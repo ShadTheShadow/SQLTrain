@@ -9,18 +9,37 @@
         </h1>
         <input type="button" value = "Test" onclick= "testCall()" ></input>
         <input type="button" value = "Starting locs" onclick= "getStartLocs()" ></input>
+        <select id="DepartureDropdown"></select>
         <p id="response"></p>
         <script>
             async function testCall(){
                 const response = await fetch('/test');
                 document.getElementById("response").textContent = await response.text();
                 console.log(response);
+                console.log(response.json);
             }
 
             async function getStartLocs(){
                 const response = await fetch('/start');
-                document.getElementById("response").textContent = await response.text();
-                console.log(response);
+
+                const jsonData = await response.json();
+
+                const destinations = jsonData.map(obj => obj['Departure station']);
+
+                console.log(destinations)
+
+                const dropdown = document.getElementById("DepartureDropdown");
+
+
+
+                for (let i = 0; i < destinations.length; i++){
+                    const option = document.createElement("option");
+                    option.text = destinations[i];
+                    dropdown.add(option);
+                }
+
+
+                console.log(destinations);
             }
         </script>
     </body>
