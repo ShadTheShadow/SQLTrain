@@ -17,6 +17,9 @@ async function getPassword(){
     }
 }
 
+
+
+
 async function initializeDatabase(){
 
     try {
@@ -63,11 +66,28 @@ async function initializeDatabase(){
         });
 
 
-        application.get("/start", async (request, response) => {
+        application.get('/startLocs', async (request, response) => {
 
             try{
                 const[results, fields] = await connection.query(
                     'SELECT DISTINCT `Departure station` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france`'
+                );
+                console.log(results);
+                response.send(results);
+
+            }catch(error){
+                console.log(error);
+                response.status(500).send("Error fetching data from database.");
+            }
+
+        });
+
+
+        application.get('/endLocs', async (request, response) => {
+
+            try{
+                const[results, fields] = await connection.query(
+                    'SELECT DISTINCT `Arrival station` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france`'
                 );
                 console.log(results);
                 response.send(results);
@@ -86,7 +106,9 @@ async function initializeDatabase(){
     } catch (error) {
         console.log(error);
     }
+
 }
+
 
 //Starts the server
 initializeDatabase();

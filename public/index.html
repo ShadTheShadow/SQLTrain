@@ -8,8 +8,8 @@
             Hello! Welcome to SQLTrain!
         </h1>
         <input type="button" value = "Test" onclick= "testCall()" ></input>
-        <input type="button" value = "Starting locs" onclick= "getStartLocs()" ></input>
         <select id="DepartureDropdown"></select>
+        <select id="ArrivalDropdown"></select>
         <p id="response"></p>
         <script>
             async function testCall(){
@@ -19,28 +19,48 @@
                 console.log(response.json);
             }
 
-            async function getStartLocs(){
-                const response = await fetch('/start');
 
-                const jsonData = await response.json();
+            //Sets up dropdowns    
+            async function getLocs(){
+                const startResponse = await fetch('http://localhost:3000/startLocs');
+                const endResponse = await fetch('http://localhost:3000/endLocs');
 
-                const destinations = jsonData.map(obj => obj['Departure station']);
+                const jsonStartData = await startResponse.json();
+                const jsonEndData = await endResponse.json();
 
-                console.log(destinations)
-
-                const dropdown = document.getElementById("DepartureDropdown");
-
+                const startDestinations = jsonStartData.map(obj => obj['Departure station']);
+                const endDestinations = jsonEndData.map(obj => obj['Arrival station']);
 
 
-                for (let i = 0; i < destinations.length; i++){
+                console.log(startDestinations)
+                console.log(endDestinations)
+
+
+                const startDropdown = document.getElementById("DepartureDropdown");
+                const endDropdown = document.getElementById("ArrivalDropdown");
+
+
+
+                for (let i = 0; i < startDestinations.length; i++){
                     const option = document.createElement("option");
-                    option.text = destinations[i];
-                    dropdown.add(option);
+                    option.text = startDestinations[i];
+                    startDropdown.add(option);
                 }
 
 
-                console.log(destinations);
+                for (let i = 0; i < endDestinations.length; i++){
+                    const option = document.createElement("option");
+                    option.text = endDestinations[i];
+                    endDropdown.add(option);
+                }
+
+
+                console.log(startDestinations);
+                console.log(endDestinations);
             }
+
+            getLocs();
+
         </script>
     </body>
 </html>
