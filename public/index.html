@@ -7,16 +7,48 @@
         <h1>
             Hello! Welcome to SQLTrain!
         </h1>
-        <input type="button" value = "Test" onclick= "testCall()" ></input>
+        <input type="button" value = "Find path" onclick= "findPath()" ></input>
         <select id="DepartureDropdown"></select>
         <select id="ArrivalDropdown"></select>
         <p id="response"></p>
         <script>
-            async function testCall(){
-                const response = await fetch('/test');
-                document.getElementById("response").textContent = await response.text();
-                console.log(response);
-                console.log(response.json);
+
+
+            async function findPath(){
+
+                const departureDropdown = document.getElementById("DepartureDropdown");
+
+                const start = departureDropdown.value;
+
+                const arrivalDropdown = document.getElementById("ArrivalDropdown");
+
+                const end = arrivalDropdown.value;
+
+                const yearDropdown = document.getElementById("YearDropdown");
+
+                const year = 2018;
+
+                const path = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
+
+                const jsonData = await path.json();
+
+                console.log("JSONDATA:")
+                console.log(jsonData)
+                
+                const text = document.getElementById("response");
+
+
+                //TODO: What do I do with this data, how do I output?
+
+                if (JSON.stringify(jsonData).length > 2){
+                    console.log("WORKING")
+                    text.innerText = "PATH FOUND!"
+                }else{
+                    console.log("NOT WORKING")
+                    console.log(JSON.stringify(jsonData))
+                    text.innerText = "NO PATH"
+                }
+
             }
 
 
@@ -30,10 +62,6 @@
 
                 const startDestinations = jsonStartData.map(obj => obj['Departure station']);
                 const endDestinations = jsonEndData.map(obj => obj['Arrival station']);
-
-
-                console.log(startDestinations)
-                console.log(endDestinations)
 
 
                 const startDropdown = document.getElementById("DepartureDropdown");

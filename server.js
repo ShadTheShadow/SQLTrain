@@ -100,6 +100,31 @@ async function initializeDatabase(){
         });
 
 
+        application.get('/findPath', async (request, response) => {
+
+            
+            try{
+
+                const start =  request.query.start;
+                const end = request.query.end;
+                const year = request.query.year;
+
+                const[results, fields] = await connection.query(
+                    
+                    `SELECT * FROM \`trains\`.\`untitled spreadsheet - regularities_by_liaisons_trains_france\` WHERE \`Departure station\` = '${start}' AND \`Arrival station\` = '${end}' AND \`Year\` = '${year}'`
+                );
+                console.log(results);
+                response.send(results);
+
+            }catch(error){
+                console.log(error);
+                response.status(500).send("Error fetching data from database.");
+            }
+            
+
+        });
+
+
 
 
 
