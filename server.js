@@ -100,7 +100,7 @@ async function initializeDatabase(){
         });
 
 
-        application.get('/findPath', async (request, response) => {
+        application.get('/findDirectPath', async (request, response) => {
 
             
             try{
@@ -124,6 +124,31 @@ async function initializeDatabase(){
 
         });
 
+
+
+       
+ 
+
+
+       application.get('/findPath', async (request, response) => {
+
+            
+        try{
+
+            const[results, fields] = await connection.query(
+                
+                "SELECT `Departure station`, `Arrival station`, `Average travel time (min)`, `Month` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france` WHERE Year = \"2018\""
+            );
+            console.log(results);
+            response.send(results);
+
+        }catch(error){
+            console.log(error);
+            response.status(500).send("Error fetching data from database.");
+        }
+        
+
+    });
 
 
 

@@ -7,14 +7,14 @@
         <h1>
             Hello! Welcome to SQLTrain!
         </h1>
-        <input type="button" value = "Find path" onclick= "findPath()" ></input>
+        <input type="button" value = "Find path" onclick= "findDirectPath()" ></input>
         <select id="DepartureDropdown"></select>
         <select id="ArrivalDropdown"></select>
         <p id="response"></p>
         <script>
 
 
-            async function findPath(){
+            async function findDirectPath(){
 
                 const departureDropdown = document.getElementById("DepartureDropdown");
 
@@ -28,7 +28,7 @@
 
                 const year = 2018;
 
-                const path = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
+                const path = await fetch(`http://localhost:3000/findDirectPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
 
                 const jsonData = await path.json();
 
@@ -38,7 +38,6 @@
                 const text = document.getElementById("response");
 
 
-                //TODO: What do I do with this data, how do I output?
 
                 if (JSON.stringify(jsonData).length > 2){
                     console.log("WORKING")
