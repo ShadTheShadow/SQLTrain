@@ -135,11 +135,38 @@ async function initializeDatabase(){
             
         try{
 
+            const start =  request.query.start;
+            const end = request.query.end;
+            const year = request.query.year;
+
             const[results, fields] = await connection.query(
                 
                 "SELECT `Departure station`, `Arrival station`, `Average travel time (min)`, `Month` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france` WHERE Year = \"2018\""
             );
-            console.log(results);
+
+
+            const graph = {}
+
+            for (const row of results){
+                const from = row[`Departure station`]
+                const to = row[`Arrival station`]
+                const time = row[`Average travel time (min)`]
+                const month = row[`Month`]
+
+                if (!graph[from]) graph[from] = []
+                
+                //This is a list of outbound nodes
+                graph[from].push({station: to, time, month})
+
+            }
+
+            console.log(graph)
+
+
+
+
+
+            //console.log(results);
             response.send(results);
 
         }catch(error){
