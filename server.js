@@ -2,7 +2,6 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 
-
 var password;
 
 async function getPassword(){
@@ -144,8 +143,7 @@ async function initializeDatabase(){
                 "SELECT `Departure station`, `Arrival station`, `Average travel time (min)`, `Month` FROM `trains`.`untitled spreadsheet - regularities_by_liaisons_trains_france` WHERE Year = \"2018\""
             );
 
-
-            const graph = {}
+            const graph = {};
 
             for (const row of results){
                 const from = row[`Departure station`]
@@ -155,15 +153,18 @@ async function initializeDatabase(){
 
                 if (!graph[from]) graph[from] = []
                 
-                //This is a list of outbound nodes
+                //This is a list of outbound nodes from the original station
                 graph[from].push({station: to, time, month})
 
             }
 
-            console.log(graph)
+            console.log(graph[start])
 
+            const PriorityQueue = require("./PriorityQueue")
+            const queue = new PriorityQueue();
 
-
+            //Calls our helper function
+            pathHelper(graph, queue, start);
 
 
             //console.log(results);
@@ -177,6 +178,15 @@ async function initializeDatabase(){
 
     });
 
+
+    function pathHelper(graph, queue, node){
+
+        /*
+        for (var i = 0; i < this.graph[node].length; i++){
+            //queue.enqueue(graph[node][i])
+        }
+            */
+    }
 
 
 
