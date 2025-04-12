@@ -164,11 +164,12 @@ async function initializeDatabase(){
             const queue = new PriorityQueue();
 
             //Calls our helper function
-            pathHelper(graph, queue, start);
+            const fastestPath = pathHelper(graph, queue, graph[start], end);
 
+            console.log(fastestPath)
 
             //console.log(results);
-            response.send(results);
+            response.send(fastestPath);
 
         }catch(error){
             console.log(error);
@@ -179,13 +180,46 @@ async function initializeDatabase(){
     });
 
 
-    function pathHelper(graph, queue, node){
+    //Currently this doesn't really work because it doesn't make a final graph of nodes, just removes stuff for fun
+    function pathHelper(graph, queue, nodes, end){
 
-        /*
-        for (var i = 0; i < this.graph[node].length; i++){
-            //queue.enqueue(graph[node][i])
+        console.log("RUNNING PATHHELPER")
+        console.log(nodes)
+        console.log("LENGTH: " + nodes.length)
+
+        var pastTime;
+        try {
+            pastTime = queue.peek().time
+        } catch (error) {
+            //If nothing is in the queue
+            pastTime = 0;
         }
-            */
+
+        
+        //Enqueues everything in current collection of nodes
+        for (var i = 0; i < nodes.length; i++){
+
+            //Updates historical time
+            nodes[i].time += pastTime
+
+            queue.enqueue(nodes[i])
+        }
+            
+        
+        const fastestNode = queue.dequeue()
+
+        if (fastestNode.station === end){
+            return fastestNode
+        }
+        
+        if (fastestNode != null){
+            pathHelper(graph, queue, graph[fastestNode.station])
+        }else{
+            return;
+        }
+        
+
+        //pathHelper(graph, queue, newNode)
     }
 
 
