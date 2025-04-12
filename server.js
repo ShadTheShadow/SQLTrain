@@ -136,7 +136,6 @@ async function initializeDatabase(){
 
             const start =  request.query.start;
             const end = request.query.end;
-            const year = request.query.year;
 
             const[results, fields] = await connection.query(
                 
@@ -163,8 +162,10 @@ async function initializeDatabase(){
             const PriorityQueue = require("./PriorityQueue")
             const queue = new PriorityQueue();
 
+            var path = [start]
+
             //Calls our helper function
-            const fastestPath = pathHelper(graph, queue, graph[start], end);
+            const fastestPath = pathHelper(graph, queue, graph[start], end, path);
 
             console.log(fastestPath)
 
@@ -180,19 +181,20 @@ async function initializeDatabase(){
     });
 
 
-    //Currently this doesn't really work because it doesn't make a final graph of nodes, just removes stuff for fun
-    function pathHelper(graph, queue, nodes, end){
+    function pathHelper(graph, queue, nodes, end, path){
 
         console.log("RUNNING PATHHELPER")
         console.log(nodes)
         console.log("LENGTH: " + nodes.length)
 
+        var parent = queue.peek()
+
         var pastTime;
-        try {
-            pastTime = queue.peek().time
-        } catch (error) {
+        if (parent != null){
+            pastTime = parent.time
+        }else{
             //If nothing is in the queue
-            pastTime = 0;
+            pastTime = 0
         }
 
         
@@ -202,6 +204,13 @@ async function initializeDatabase(){
             //Updates historical time
             nodes[i].time += pastTime
 
+            //Keeps track of parents
+
+            //Checks if the queue is not empty and the station isn't already in the path
+            if (queue.peek() != null && !(path.includes(queue.peek().station))){
+                path.push(queue.peek().station)
+            }
+
             queue.enqueue(nodes[i])
         }
             
@@ -209,17 +218,15 @@ async function initializeDatabase(){
         const fastestNode = queue.dequeue()
 
         if (fastestNode.station === end){
+            console.log("FASTEST PATH: " + path)
             return fastestNode
         }
         
         if (fastestNode != null){
             pathHelper(graph, queue, graph[fastestNode.station])
         }else{
-            return;
+            return null;
         }
-        
-
-        //pathHelper(graph, queue, newNode)
     }
 
 

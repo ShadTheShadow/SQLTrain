@@ -22,7 +22,7 @@ class PriorityQueue{
         if (this.data.length > 0){
             return this.data[0]
         }
-        throw new Error("Queue is empty")
+        return null
     }
 
     isEmpty(){
