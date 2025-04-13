@@ -204,10 +204,14 @@ async function initializeDatabase(){
             //Updates historical time
             nodes[i].time += pastTime
 
-            //Keeps track of parents
 
             //Checks if the queue is not empty and the station isn't already in the path
+
+            //HOW IS PATH UNDEFINED, I'm literally adding the start node to path
+            console.log("PATH LENGTH: " + path.length)
+
             if (queue.peek() != null && !(path.includes(queue.peek().station))){
+                //Keeps track of parents
                 path.push(queue.peek().station)
             }
 
@@ -219,11 +223,12 @@ async function initializeDatabase(){
 
         if (fastestNode.station === end){
             console.log("FASTEST PATH: " + path)
+            console.log("TIME TAKEN: " + fastestNode.time)
             return fastestNode
         }
         
         if (fastestNode != null){
-            pathHelper(graph, queue, graph[fastestNode.station])
+            pathHelper(graph, queue, graph[fastestNode.station], end, path)
         }else{
             return null;
         }

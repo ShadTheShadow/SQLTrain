@@ -6,7 +6,23 @@ class PriorityQueue{
     }
 
     enqueue(node){
-        this.data.splice(0,0,node)
+
+        if (this.data.length == 0){
+            this.data.push(node)
+            return true
+        }
+
+
+        for (var i = 0; i < this.data.length; i++){
+            if (node.time < this.data[i].time){
+                this.data.splice(i,0,node)
+                return true;
+            }
+        }
+
+        //Adds to end if biggest time
+        this.data.push(node)
+
         return true
     }
 
@@ -26,11 +42,11 @@ class PriorityQueue{
     }
 
     isEmpty(){
-
+        return this.data.length == 0
     }
 
     size(){
-
+        return this.data.length
     }
 }
 
