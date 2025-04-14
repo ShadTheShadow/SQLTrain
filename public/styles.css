@@ -3,7 +3,7 @@
 }
 
 h1{
-    color: blue;
+    color: rgb(0, 83, 138);
     font-size: 40px;
 }
 
@@ -21,4 +21,9 @@ h2{
 
 #ArrivalDropdown{
     text-align: center;
+}
+
+img{
+    width: 40%;
+    height: auto;
 }
