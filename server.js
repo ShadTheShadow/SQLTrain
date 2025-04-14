@@ -150,8 +150,11 @@ async function initializeDatabase(){
                 const time = row[`Average travel time (min)`]
                 const month = row[`Month`]
 
-                if (!graph[from]) graph[from] = []
-                
+                if (!graph[from]){
+                    graph[from] = []
+                }
+
+                     
                 //This is a list of outbound nodes from the original station
                 graph[from].push({station: to, time, month})
 

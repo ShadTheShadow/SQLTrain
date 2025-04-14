@@ -29,26 +29,24 @@
 
                 const year = 2018;
 
-                //Direct path version
-                //const path = await fetch(`http://localhost:3000/findDirectPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
 
+                const promise = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
 
-                //Indirect path version
-                var promise = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
+                const response = await promise.json()
 
-
-                //Something is very wrong here, for some reason both path and time are undefined
-                const{ path, time } = promise
 
                 const text = document.getElementById("response");
 
-
-                try {
-                    text.innerText = "PATH FOUND! " + path + " Time: " + time
-                } catch (error) {
-                    console.log(error)
+                if (response == null){
                     text.innerText = "NO PATH"
                 }
+
+                console.log(response)
+                console.log(response.path)
+
+
+                text.innerText = "PATH FOUND: " + response.path + ", time: " + response.time
+
 
             }
 
