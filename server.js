@@ -157,20 +157,27 @@ async function initializeDatabase(){
 
             }
 
+            console.log(graph)
+
             console.log(graph[start])
 
-            const PriorityQueue = require("./PriorityQueue")
-            const queue = new PriorityQueue();
-
-            var path = [start]
 
             //Calls our helper function
-            const fastestPath = pathHelper(graph, queue, graph[start], end, path);
+            const fastestPath = pathHelper(graph, start, end);
+
+            if (fastestPath == null){
+                console.log("NO PATH EXISTS")
+            }
 
             console.log(fastestPath)
+            
+            var out = {path: fastestPath.path, time: fastestPath.time}
+
+            console.log(out.path)
+            console.log(out.time)
 
             //console.log(results);
-            response.send(fastestPath);
+            response.send(out);
 
         }catch(error){
             console.log(error);
@@ -181,57 +188,59 @@ async function initializeDatabase(){
     });
 
 
-    function pathHelper(graph, queue, nodes, end, path){
+    function pathHelper(graph, start, end){
+        const PriorityQueue = require("./PriorityQueue")
+        let queue = new PriorityQueue();
+        let times = {}
+        let previous = {}
+        let visited = new Set()
 
-        console.log("RUNNING PATHHELPER")
-        console.log(nodes)
-        console.log("LENGTH: " + nodes.length)
-
-        var parent = queue.peek()
-
-        var pastTime;
-        if (parent != null){
-            pastTime = parent.time
-        }else{
-            //If nothing is in the queue
-            pastTime = 0
+        for (const station in graph){
+            times[station] = Infinity
+            previous[station] = null
         }
 
-        
-        //Enqueues everything in current collection of nodes
-        for (var i = 0; i < nodes.length; i++){
 
-            //Updates historical time
-            nodes[i].time += pastTime
+        times[start] = 0
+        queue.enqueue({station: start, time: 0})
 
+        while(!queue.isEmpty()){
 
-            //Checks if the queue is not empty and the station isn't already in the path
-
-            //HOW IS PATH UNDEFINED, I'm literally adding the start node to path
-            console.log("PATH LENGTH: " + path.length)
-
-            if (queue.peek() != null && !(path.includes(queue.peek().station))){
-                //Keeps track of parents
-                path.push(queue.peek().station)
+            const fastestNode = queue.dequeue()
+            if (!visited.has(fastestNode.station)){
+                visited.add(fastestNode.station)
             }
 
-            queue.enqueue(nodes[i])
-        }
-            
-        
-        const fastestNode = queue.dequeue()
+            if (fastestNode.station === end){
+                let path = []
+                let node = end
+                while(node){
+                    path.unshift(node)
+                    node = previous[node]
+                }
 
-        if (fastestNode.station === end){
-            console.log("FASTEST PATH: " + path)
-            console.log("TIME TAKEN: " + fastestNode.time)
-            return fastestNode
+                return {path, time: times[end]}
+            }
+
+
+
+            const outboundPaths = graph[fastestNode.station]
+
+            for (const neighbor of outboundPaths){
+                const alt = times[fastestNode.station] + neighbor.time;
+                if (alt < times[neighbor.station]) {
+                    times[neighbor.station] = alt;
+                    previous[neighbor.station] = fastestNode.station;
+                    queue.enqueue({ station: neighbor.station, time: alt });
+                }
+            }
+
+
         }
+
+        //If no path is found
+        return null
         
-        if (fastestNode != null){
-            pathHelper(graph, queue, graph[fastestNode.station], end, path)
-        }else{
-            return null;
-        }
     }
 
 

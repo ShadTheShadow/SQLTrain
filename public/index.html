@@ -34,25 +34,19 @@
 
 
                 //Indirect path version
-                const path = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
+                var promise = await fetch(`http://localhost:3000/findPath?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&year=${encodeURIComponent(year)}`)
 
 
+                //Something is very wrong here, for some reason both path and time are undefined
+                const{ path, time } = promise
 
-                const jsonData = await path.json();
-
-                console.log("JSONDATA:")
-                console.log(jsonData)
-                
                 const text = document.getElementById("response");
 
 
-
-                if (JSON.stringify(jsonData).length > 2){
-                    console.log("WORKING")
-                    text.innerText = "PATH FOUND!"
-                }else{
-                    console.log("NOT WORKING")
-                    console.log(JSON.stringify(jsonData))
+                try {
+                    text.innerText = "PATH FOUND! " + path + " Time: " + time
+                } catch (error) {
+                    console.log(error)
                     text.innerText = "NO PATH"
                 }
 
