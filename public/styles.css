@@ -1,0 +1,24 @@
+#Greeting {
+    text-align: center;
+}
+
+h1{
+    color: blue;
+    font-size: 40px;
+}
+
+h2{
+    text-align: center;
+}
+
+#button{
+    text-align: center;
+}
+
+#DepartureDropdown{
+    text-align: center;
+}
+
+#ArrivalDropdown{
+    text-align: center;
+}
