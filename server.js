@@ -165,16 +165,30 @@ async function initializeDatabase(){
             console.log(graph[start])
 
 
-            //Calls our helper function
-            const fastestPath = pathHelper(graph, start, end);
+            console.log("TIMES PER MONTH ---")
+            //Checks paths in all 12 months and picks the fastest
+            var fastestPath = {path: ["Placeholder"], time: Infinity, month: -1}
+            for (var i = 1; i <= 12; i++){
+                let path = pathHelper(graph, start, end, i)
+                if (path != null && path.time < fastestPath.time){
+                    fastestPath = path;
+                }
+                
+                if (path != null){
+                    console.log(path.month + ": " + path.time)
+                }
+            }
+            console.log("---")
 
-            if (fastestPath == null){
+
+            if (fastestPath.month == -1){
                 console.log("NO PATH EXISTS")
+                response.send(null)
             }
 
             console.log(fastestPath)
             
-            var out = {path: fastestPath.path, time: fastestPath.time}
+            var out = {path: fastestPath.path, time: fastestPath.time, month : fastestPath.month}
 
             console.log(out.path)
             console.log(out.time)
@@ -191,7 +205,7 @@ async function initializeDatabase(){
     });
 
 
-    function pathHelper(graph, start, end){
+    function pathHelper(graph, start, end, currMonth){
         const PriorityQueue = require("./PriorityQueue")
         let queue = new PriorityQueue();
         let times = {}
@@ -222,19 +236,19 @@ async function initializeDatabase(){
                     node = previous[node]
                 }
 
-                return {path, time: times[end]}
+                return {path, time: times[end], month: currMonth}
             }
-
 
 
             const outboundPaths = graph[fastestNode.station]
 
             for (const neighbor of outboundPaths){
                 const alt = times[fastestNode.station] + neighbor.time;
-                if (alt < times[neighbor.station]) {
+                //Checks if the train is in the right month, and whether or not it's faster than previous paths
+                if (alt < times[neighbor.station] & neighbor.month === currMonth) {
                     times[neighbor.station] = alt;
                     previous[neighbor.station] = fastestNode.station;
-                    queue.enqueue({ station: neighbor.station, time: alt });
+                    queue.enqueue({ station: neighbor.station, time: alt, month: neighbor.month});
                 }
             }
 

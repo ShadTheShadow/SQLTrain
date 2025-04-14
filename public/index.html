@@ -43,6 +43,7 @@
 
                 console.log(response)
                 console.log(response.path)
+                console.log(response.month)
 
                 var out = ""
 
@@ -55,14 +56,13 @@
                     
                 }
 
-                var truncated = Math.trunc(response.time)
 
-                var hours = Math.trunc(truncated/60)
+                var hours = Math.trunc(response.time/60)
 
-                var minutes = Math.trunc(truncated%60)
+                var minutes = Math.trunc(response.time%60)
 
              
-                text.innerText = "PATH FOUND: " + out + ", time: " + hours + " hours and " + minutes + " minutes"
+                text.innerText = "PATH FOUND: " + out + ", time: " + hours + " hours and " + minutes + " minutes, month: " + response.month
 
 
             }
