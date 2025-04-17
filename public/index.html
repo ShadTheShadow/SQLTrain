@@ -12,18 +12,53 @@
         <h1 id="Greeting">
             SQLTrain: Your guide to France
         </h1>
-        <h2>
-            Greetings traveler! Want to make the best out of your trip to France? We've got you covered
-        </h2>
-        <h3>
-            To plan your route, we've provided you with a handy tool to calculate the most efficient month to travel France by rail!
-            Simply enter your desired starting and ending destinations, and we'll give you the best month to travel in the least amount of time.
-        </h3>
-        <button value="Find path" onclick="findPath()">Find path</button>
-        <select id="DepartureDropdown"></select>
-        <select id="ArrivalDropdown"></select>
-        <p id="response"></p>
-        <img src="images/ChatGPT Image Apr 14, 2025, 02_34_49 PM.png" alt = "Logo"></img>
+
+
+
+        <div class="container">
+            <div class="left-content">
+                <img src="images/ChatGPT Image Apr 14, 2025, 02_34_49 PM.png" alt = "Logo"></img>
+            </div>
+            <div class="right-content">
+              
+
+                <h2>
+                    Greetings traveler! Want to make the best out of your trip to France? We've got you covered
+                </h2>
+                <h3>
+                    To plan your route, we've provided you with a handy tool to calculate the most efficient month to travel France by rail!
+                    Simply enter your desired starting and ending destinations, and we'll give you the best month to travel in the least amount of time.
+                </h3>
+
+                <div class = "button">
+                    <button value="Find path" onclick="findPath()">Find path</button>
+                </div>
+
+                <div class = "dropdowns">
+                    <select id="DepartureDropdown"></select>
+                    <select id="ArrivalDropdown"></select>
+                </div>
+
+                <p id="response"></p>
+
+
+            </div>
+            
+        </div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+        
         <script>
 
 
