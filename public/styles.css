@@ -28,11 +28,13 @@ h3{
 }
 
 button{
-    background-color: rgb(255, 119, 119); 
+    background-color: #e84b39; 
     border: 2px solid black;
     padding: 8px 16px;
     text-align: center;
     text-decoration: none;
+    font-size: 17;
+    font-weight: bold;
     display: inline-block;
     border-radius: 8px;
     color: black;
@@ -112,3 +114,26 @@ select:hover{
     flex-wrap: wrap; 
     justify-content: center;
 }
+
+.output{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; 
+    justify-content: center;
+}
+
+.station-text{
+    color: #e84b39;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.details-text {
+    display: block;
+    font-size: 20px;
+    text-align: center;
+    color: rgb(0, 83, 138);
+    font-weight: bold;
+  }

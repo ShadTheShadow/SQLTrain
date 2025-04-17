@@ -26,8 +26,8 @@
                     Greetings traveler! Want to make the best out of your trip to France? We've got you covered
                 </h2>
                 <h3>
-                    To plan your route, we've provided you with a handy tool to calculate the most efficient month to travel France by rail!
-                    Simply enter your desired starting and ending destinations, and we'll give you the best month to travel in the least amount of time.
+                    To plan your route, we've provided you with a handy tool to calculate the most efficient route to travel France by rail!
+                    Simply enter your desired starting and ending destinations, and we'll give you the best month of the year to travel in the least amount of time.
                 </h3>
 
                 <div class = "button">
@@ -39,8 +39,9 @@
                     <select id="ArrivalDropdown"></select>
                 </div>
 
-                <p id="response"></p>
-
+                <div class = "output">
+                    <p id="response"></p>
+                </div>
 
             </div>
             
@@ -108,8 +109,55 @@
 
                 var minutes = Math.trunc(response.time%60)
 
+                var month;
+
+                switch(response.month) {
+                    case 1:
+                        month = "January"
+                        break;
+                    case 2:
+                        month = "Febuary"
+                        break;
+                    case 3:
+                        month = "March"
+                        break;
+                    case 4:
+                        month = "April"
+                        break;
+                    case 5:
+                        month = "May"
+                        break;
+                    case 6:
+                        month = "June"
+                        break;
+                    case 7:
+                        month = "July"
+                        break;
+                    case 8:
+                        month = "August"
+                        break;
+                    case 9:
+                        month = "September"
+                        break;
+                    case 10:
+                        month = "October"
+                        break;
+                    case 11:
+                        month = "November"
+                        break;
+                    case 12:
+                        month = "December"
+                        break;
+                    
+                    default:
+                    // code block
+                    }
+
              
-                text.innerText = "PATH FOUND: " + out + ", time: " + hours + " hours and " + minutes + " minutes, month: " + response.month
+                    text.innerHTML = `
+                                    <div class="station-text">${out}</div>
+                                    <div class="details-text">${month} -- travel time of ${hours} hours and ${minutes} minutes</div>
+                                    `;
 
 
             }
