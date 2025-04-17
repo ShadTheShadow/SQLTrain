@@ -1,5 +1,3 @@
-# Demo 🎥
-
 https://github.com/user-attachments/assets/c54f86c9-abe2-47af-b9fd-0f56b02bb6f1
 
 
@@ -12,7 +10,7 @@ https://github.com/user-attachments/assets/c54f86c9-abe2-47af-b9fd-0f56b02bb6f1
 
 ## 🌍 About the Project
 
-France has one of the largest railways in the world, this web app simplifies navigating the logistical mess in a quick and easy format. SQLTrain simplifies this by:
+France has one of the largest railways systems in the world, this web app simplifies navigating the logistical mess in a quick and easy format. SQLTrain simplifies this by:
 
 - Connecting to SQL-based train data via REST APIs  
 - Using **Dijkstra's algorithm** to compute the fastest path  
@@ -25,7 +23,7 @@ France has one of the largest railways in the world, this web app simplifies nav
 ## 🔧 Built With
 
 - **Frontend:** HTML, CSS, JavaScript  
-- **Backend:** JavaScript (Node or similar), REST APIs  
+- **Backend:** JavaScript, REST APIs, Express.js, Node.js
 - **Database:** MySQL (with imported train CSV data)  
 
 ---
