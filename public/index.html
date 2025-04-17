@@ -6,14 +6,10 @@
         <link rel="icon" type="image/x-icon" href="images/SQLTrain_logo_nobackground.png">
     </head>
 
-
-
     <body style="background-color: #fff2cf;">
         <h1 id="Greeting">
             SQLTrain: Your guide to France
         </h1>
-
-
 
         <div class="container">
             <div class="left-content">
@@ -48,18 +44,6 @@
         </div>
 
 
-
-
-
-
-
-
-
-        
-
-
-
-        
         <script>
 
 
@@ -104,55 +88,18 @@
                     
                 }
 
-
                 var hours = Math.trunc(response.time/60)
 
                 var minutes = Math.trunc(response.time%60)
 
                 var month;
 
-                switch(response.month) {
-                    case 1:
-                        month = "January"
-                        break;
-                    case 2:
-                        month = "Febuary"
-                        break;
-                    case 3:
-                        month = "March"
-                        break;
-                    case 4:
-                        month = "April"
-                        break;
-                    case 5:
-                        month = "May"
-                        break;
-                    case 6:
-                        month = "June"
-                        break;
-                    case 7:
-                        month = "July"
-                        break;
-                    case 8:
-                        month = "August"
-                        break;
-                    case 9:
-                        month = "September"
-                        break;
-                    case 10:
-                        month = "October"
-                        break;
-                    case 11:
-                        month = "November"
-                        break;
-                    case 12:
-                        month = "December"
-                        break;
-                    
-                    default:
-                    // code block
-                    }
+                const monthNames = [
+                    "January", "Febuary", "March", "April", "May",
+                    "June", "July", "August", "September", "October", "November", "December"
+                ]
 
+                var month = monthNames[response.month-1] || "Invalid month";
              
                     text.innerHTML = `
                                     <div class="station-text">${out}</div>

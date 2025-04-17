@@ -17,8 +17,6 @@ async function getPassword(){
 }
 
 
-
-
 async function initializeDatabase(){
 
     try {
@@ -122,11 +120,6 @@ async function initializeDatabase(){
             
 
         });
-
-
-
-       
- 
 
 
        application.get('/findPath', async (request, response) => {
