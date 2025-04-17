@@ -3,22 +3,27 @@
         <script src="../server.js"></script>
         <script src="../PriorityQueue.js"></script>
         <link rel="stylesheet" href="../styles.css">
+        <link rel="icon" type="image/x-icon" href="images/SQLTrain_logo_nobackground.png">
     </head>
 
 
 
     <body style="background-color: #fff2cf;">
         <h1 id="Greeting">
-            Hello! Welcome to SQLTrain!
+            SQLTrain: Your guide to France
         </h1>
         <h2>
-            Instructions: Enter your desired starting and ending destinations, and we'll give you the best month to travel in the shortest time!
+            Greetings traveler! Want to make the best out of your trip to France? We've got you covered
         </h2>
-        <input type="button" value = "Find path" onclick= "findPath()" ></input>
+        <h3>
+            To plan your route, we've provided you with a handy tool to calculate the most efficient month to travel France by rail!
+            Simply enter your desired starting and ending destinations, and we'll give you the best month to travel in the least amount of time.
+        </h3>
+        <button value="Find path" onclick="findPath()">Find path</button>
         <select id="DepartureDropdown"></select>
         <select id="ArrivalDropdown"></select>
         <p id="response"></p>
-        <img src="ChatGPT Image Apr 14, 2025, 02_34_49 PM.png" alt = "Logo"></img>
+        <img src="images/ChatGPT Image Apr 14, 2025, 02_34_49 PM.png" alt = "Logo"></img>
         <script>
 
 
